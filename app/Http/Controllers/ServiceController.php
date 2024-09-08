@@ -47,10 +47,25 @@ class ServiceController extends Controller
             'nama' => 'required',
         ]);
 
-        $service = new Service();
-        $service->nama = $request->nama;
-        $service->save();
-
+        Service::create($request->all());
         return redirect()->route('service')->with('success');
+    }
+
+    function edit($id)
+    {
+        $service = Service::find($id);
+        return view('page-pertemuan-2.sections.service-edit', compact('service'));
+    }
+
+    function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        $service = Service::find($id);
+        $service->update($request->all());
+
+        return redirect()->route('service')->with('success', 'Service updated successfully.');
     }
 }

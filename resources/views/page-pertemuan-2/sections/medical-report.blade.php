@@ -22,7 +22,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody id="myTable" class="text-center">
                 @foreach ($medicalReports as $medicalReport)
                     <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
                         @foreach ($columns as $column)
@@ -30,7 +30,7 @@
                                 {{ $medicalReport->$column }}
                             </td>
                         @endforeach
-                        <td class="flex gap-3 px-4 py-2">
+                        <td class="flex gap-3 px-4 py-2 justify-center">
                             <a href="{{ route('medicalReport.edit', $medicalReport->medical_report_id) }}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('medicalReport.delete', $medicalReport->medical_report_id) }}"
@@ -64,14 +64,14 @@
                         ID Pasien</label>
                 </div>
 
-                <div class="relative z-0 w-full mb-5 group">
+                {{-- <div class="relative z-0 w-full mb-5 group">
                     <input datepicker id="date" type="text" name="date" autocomplete="off"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
                         placeholder="" required>
                     <label for="date"
                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#229799]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Tanggal Periksa</label>
-                </div>
+                </div> --}}
 
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 w-full mb-5 group">

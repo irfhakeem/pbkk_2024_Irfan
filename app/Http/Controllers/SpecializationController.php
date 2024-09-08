@@ -43,10 +43,24 @@ class SpecializationController extends Controller
             'nama' => 'required',
         ]);
 
-        $specialization = new Specialization();
-        $specialization->nama = $request->nama;
-        $specialization->save();
-
+        Specialization::create($request->all());
         return redirect()->route('specialization')->with('success');
+    }
+
+    function edit($id)
+    {
+        $specialization = Specialization::find($id);
+        return view('page-pertemuan-2.sections.specialization-edit', compact('specialization'));
+    }
+
+    function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+        ]);
+
+        $specialization = Specialization::find($id);
+        $specialization->update($request->all());
+        return redirect()->route('specialization')->with('success', 'Specialization updated successfully.');
     }
 }

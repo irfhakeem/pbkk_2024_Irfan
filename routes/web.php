@@ -35,6 +35,8 @@ Route::prefix('/page-pertemuan-2')->group(function () {
         Route::get('/doctor', [DoctorController::class, 'get'])->name('doctor');
         Route::delete('/doctor/delete/{id}', [DoctorController::class, 'delete'])->name('doctor.delete');
         Route::post('doctor/add', [DoctorController::class, 'add'])->name('doctor.add');
+        Route::get('/doctor/edit/{id}', [DoctorController::class, 'edit'])->name('doctor.edit');
+        Route::put('/doctor/{id}', [DoctorController::class, 'update'])->name('doctor.update');
 
         // Health Center
         Route::get('/health-center', [HealthCenterController::class, 'get'])->name('healthCenter');
@@ -55,10 +57,14 @@ Route::prefix('/page-pertemuan-2')->group(function () {
         Route::get('/specialization', [SpecializationController::class, 'get'])->name('specialization');
         Route::delete('/specialization/delete/{id}', [SpecializationController::class, 'delete'])->name('specialization.delete');
         Route::post('/specialization/add', [SpecializationController::class, 'add'])->name('specialization.add');
+        Route::get('/specialization/edit/{id}', [SpecializationController::class, 'edit'])->name('specialization.edit');
+        Route::put('/specialization/{id}', [SpecializationController::class, 'update'])->name('specialization.update');
 
         // Prescription
         Route::get('/prescription', [PrescriptionController::class, 'get'])->name('prescription');
         Route::delete('/prescription/delete/{id}', [PrescriptionController::class, 'delete'])->name('prescription.delete');
+        Route::post('/prescription/add', [PrescriptionController::class, 'add'])->name('prescription.add');
+
 
         // Medical Report
         Route::get('/medicalReport', [MedicalReportController::class, 'get'])->name('medicalReport');
@@ -70,5 +76,8 @@ Route::prefix('/page-pertemuan-2')->group(function () {
         // Appointment
         Route::get('/appointment', [AppointmentController::class, 'get'])->name('appointment');
         Route::delete('/appointment/delete/{id}', [AppointmentController::class, 'delete'])->name('appointment.delete');
+        Route::post('/appointment/add', [AppointmentController::class, 'add'])->name('appointment.add');
+        Route::get('/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
+        Route::put('/appointment/{id}', [AppointmentController::class, 'update'])->name('appointment.update');
     });
 });

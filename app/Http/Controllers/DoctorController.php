@@ -40,7 +40,7 @@ class DoctorController extends Controller
 
     function add(Request $request)
     {
-        $request->validate([
+        $validate = $request->validate([
             'sip' => 'required',
             'nama' => 'required',
             'email' => 'required',
@@ -51,17 +51,36 @@ class DoctorController extends Controller
             'health_center_id' => 'required',
         ]);
 
-        $doctor = new Doctor();
-        $doctor->sip = $request->sip;
-        $doctor->nama = $request->nama;
-        $doctor->tanggal_lahir = $request->tanggal_lahir;
-        $doctor->email = $request->email;
-        $doctor->no_hp = $request->no_hp;
-        $doctor->jenis_kelamin = $request->jenis_kelamin;
-        $doctor->spesialis_id = $request->spesialis_id;
-        $doctor->health_center_id = $request->health_center_id;
-        $doctor->save();
-
+        Doctor::create($validate);
         return redirect()->route('doctor')->with('success');
+    }
+
+    function edit($id)
+    {
+
+        $doctor = Doctor::find($id);
+        $healthCenters = HealthCenter::all();
+        $specializations = Specialization::all();
+
+        return view('page-pertemuan-2.sections.doctor-edit', compact('doctor', 'healthCenters', 'specializations'));
+    }
+
+    function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'sip' => 'required',
+            'nama' => 'required',
+            'email' => 'required',
+            'no_hp' => 'required',
+            'jenis_kelamin' => 'required',
+            'spesialis_id' => 'required',
+            'tanggal_lahir' => 'required',
+            'health_center_id' => 'required',
+        ]);
+
+        $doctor = Doctor::find($id);
+        $doctor->update($validate);
+
+        return redirect()->route('doctor')->with('success', 'Doctor updated successfully.');
     }
 }

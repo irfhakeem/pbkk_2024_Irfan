@@ -22,7 +22,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="myTable">
+            <tbody id="myTable" class="text-center">
                 @foreach ($doctors as $doctor)
                     <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
                         @foreach ($columns as $column)
@@ -30,8 +30,9 @@
                                 {{ $doctor->$column }}
                             </td>
                         @endforeach
-                        <td class="flex gap-3 px-4 py-2">
-                            <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                        <td class="flex gap-3 px-4 py-2 justify-center">
+                            <a href="{{ route('doctor.edit', $doctor->doctor_id) }}"
+                                class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('doctor.delete', $doctor->doctor_id) }}" method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this doctor with ID: {{ $doctor->doctor_id }}?');">
                                 @csrf

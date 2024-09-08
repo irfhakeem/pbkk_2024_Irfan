@@ -46,13 +46,30 @@ class DrugController extends Controller
             'satuan' => 'required'
         ]);
 
-        $drug = new Drug();
-        $drug->nama = $request->nama;
-        $drug->jenis = $request->jenis;
-        $drug->satuan = $request->satuan;
+        Drug::create($request->all());
         // dd($drug->nama, $drug->jenis, $drug->satuan);
-        $drug->save();
-
         return redirect()->route('drug')->with('success', 'Drug deleted successfully.');
+    }
+
+    function edit($id)
+    {
+
+        $drug = Drug::find($id);
+
+        return view('page-pertemuan-2.sections.doctor-edit', compact('doctors', 'healthCenters', 'specializations'));
+    }
+
+    function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'jenis' => 'required',
+            'satuan' => 'required'
+        ]);
+
+        $drug = Drug::find($id);
+        $drug->update($request->all());
+
+        return redirect()->route('doctor')->with('success', 'Doctor updated successfully.');
     }
 }

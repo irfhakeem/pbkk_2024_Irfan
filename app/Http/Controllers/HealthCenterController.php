@@ -46,13 +46,29 @@ class HealthCenterController extends Controller
             'email' => 'required',
         ]);
 
-        $healthCenter = new HealthCenter();
-        $healthCenter->nama = $request->nama;
-        $healthCenter->alamat = $request->alamat;
-        $healthCenter->no_telp = $request->no_telp;
-        $healthCenter->email = $request->email;
-        $healthCenter->save();
-
+        HealthCenter::create($request->all());
         return redirect()->route('healthCenter')->with('success');
+    }
+
+    function edit($id)
+    {
+        $healthCenter = HealthCenter::find($id);
+
+        return view('page-pertemuan-2.sections.health-center-edit', compact('healthCenter'));
+    }
+
+    function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'alamat' => 'required',
+            'no_telp' => 'required',
+            'email' => 'required',
+        ]);
+
+        $healthCenter = HealthCenter::find($id);
+        $healthCenter->update($request->all());
+
+        return redirect()->route('healthCenter')->with('success', 'Health Center updated successfully.');
     }
 }

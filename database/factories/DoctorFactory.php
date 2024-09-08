@@ -24,9 +24,9 @@ class DoctorFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'no_hp' => fake()->phoneNumber(),
             'jenis_kelamin' => fake()->randomElement(['L', 'P']),
-            'spesialis_id' => Specialization::factory(),
+            'spesialis_id' => fake()->randomElement(Specialization::pluck('spesialis_id')->toArray()),
             'tanggal_lahir' => fake()->date(),
-            'health_center_id' => HealthCenter::factory(),
+            'health_center_id' => fake()->randomElement(HealthCenter::pluck('health_center_id')->toArray()),
         ];
     }
 }

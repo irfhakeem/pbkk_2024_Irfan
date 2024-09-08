@@ -20,8 +20,8 @@ class PrescriptionDrugFactory extends Factory
     {
         return [
             //
-            'prescription_id' => Prescription::factory(),
-            'drug_id' => Drug::factory(),
+            'prescription_id' => fake()->randomElement(Prescription::pluck('prescription_id')->toArray()),
+            'drug_id' => fake()->randomElement(Drug::pluck('drug_id')->toArray()),
 
         ];
     }

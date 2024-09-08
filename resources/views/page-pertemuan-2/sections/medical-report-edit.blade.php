@@ -17,22 +17,23 @@
                     ID Pasien</label>
             </div>
 
-            <div class="relative z-0 w-full mb-5 group">
+            {{-- <div class="relative z-0 w-full mb-5 group">
                 <input datepicker id="date" type="text" name="date" autocomplete="off"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
                     placeholder="" value="{{ $medicalReport->date }}" required>
                 <label for="date"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#229799]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Tanggal Periksa</label>
-            </div>
+            </div> --}}
 
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
                     <label for="dokter" class="block mb-2 text-sm text-gray-500">Dokter</label>
-                    <select id="dokter" name="dokter" autocomplete="off" value="{{ $medicalReport->dokter }}" required
+                    <select id="dokter" name="dokter" autocomplete="off" required
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($doctors as $doctor)
-                            <option>
+                            <option value="{{ $doctor->nama }}"
+                                {{ $doctor->nama == $medicalReport->dokter ? 'selected' : '' }}>
                                 {{ $doctor->nama }}
                             </option>
                         @endforeach
@@ -40,10 +41,11 @@
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
                     <label for="status" class="block mb-2 text-sm text-gray-500">Status</label>
-                    <select id="status" name="status" autocomplete="off" value="{{ $medicalReport->status }}" required
+                    <select id="status" name="status" autocomplete="off" required
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
-                        <option>Selesai</option>
-                        <option>Belum Selesai</option>
+                        <option value="Selesai" {{ $medicalReport->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                        <option value="Belum Selesai" {{ $medicalReport->status == 'Belum Selesai' ? 'selected' : '' }}>
+                            Belum Selesai</option>
                     </select>
                 </div>
             </div>
@@ -51,34 +53,33 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
                     <label for="faskes" class="block mb-2 text-sm text-gray-500">Fasilitas Kesehatan </label>
-                    <select id="faskes" name="faskes" autocomplete="off" value="{{ $medicalReport->faskes }}" required
+                    <select id="faskes" name="faskes" autocomplete="off" required
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($healthCenters as $healthCenter)
-                            <option>
+                            <option value="{{ $healthCenter->nama }}"
+                                {{ $healthCenter->nama == $medicalReport->faskes ? 'selected' : '' }}>
                                 {{ $healthCenter->nama }}
                             </option>
                         @endforeach
-
                     </select>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
-                    <label for="service" class="block mb-2 text-sm text-gray-500">Service
-                    </label>
-                    <select id="service" name="service" autocomplete="off" value="{{ $medicalReport->service }}" required
+                    <label for="service" class="block mb-2 text-sm text-gray-500">Service</label>
+                    <select id="service" name="service" autocomplete="off" required
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($services as $service)
-                            <option>
+                            <option value="{{ $service->nama }}"
+                                {{ $service->nama == $medicalReport->service ? 'selected' : '' }}>
                                 {{ $service->nama }}
                             </option>
                         @endforeach
                     </select>
                 </div>
-
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <textarea name="diagnosis" id="diagnosis" autocomplete="off" value="{{ $medicalReport->diagnosis }}"
+                <textarea name="diagnosis" id="diagnosis" autocomplete="off"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
-                    placeholder=" " style="height: 100px; resize: none; " required></textarea>
+                    placeholder=" " style="height: 100px; resize: none;" required>{{ $medicalReport->diagnosis }}</textarea>
                 <label for="diagnosis"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#229799]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Diagnosis</label>
