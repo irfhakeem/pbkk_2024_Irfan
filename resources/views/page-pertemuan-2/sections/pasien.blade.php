@@ -13,11 +13,11 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 text-center">
                 <tr>
                     @foreach ($columns as $column)
-                        <th scope="col" class="px-4 py-2">
+                        <th scope="col" class="py-2 text-xs">
                             {{ ucfirst(str_replace('_', ' ', $column)) }}
                         </th>
                     @endforeach
-                    <th scope="col" class="px-4 py-2">
+                    <th scope="col" class="py-2 text-xs">
                         Action
                     </th>
                 </tr>
@@ -26,11 +26,11 @@
                 @foreach ($patients as $patient)
                     <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
                         @foreach ($columns as $column)
-                            <td class="px-4 py-2 whitespace-nowrap">
+                            <td class="py-2 whitespace-nowrap text-[11px]">
                                 {{ $patient->$column }}
                             </td>
                         @endforeach
-                        <td class="flex gap-3 px-4 py-2 justify-center">
+                        <td class="flex gap-3 py-2 justify-center">
                             <a href="{{ route('pasien.edit', $patient->patient_id) }}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('pasien.delete', $patient->patient_id) }}" method="POST"

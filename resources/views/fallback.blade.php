@@ -10,12 +10,15 @@
 </head>
 
 <body>
-    <div class="h-screen flex items-center justify-center bg-gradient-to-t from-[#222] to-[#333]">
+    <div class="h-screen flex items-center justify-center bg-white">
 
         <div class="flex flex-col items-center justify-center gap-8">
-            <h1 class="text-white text-5xl font-bold">404 | Not Found</h1>
+            <div class="flex flex-col items-center text-[#229799]">
+                <p class=" text-[12rem] font-extrabold my-[-2rem]">404</p>
+                <p class="font-medium text-2xl">PAGE NOT FOUND</p>
+            </div>
             <a href="/"
-                class="font-medium bg-white px-5 py-3 text-xl rounded-lg text-black hover:-translate-y-2 transition-all ease-in-out">
+                class=" text-xl rounded-full text-gray-400 justify-start px-5 py-2 hover:bg-[#22979970] hover:text-white">
                 Home</a>
         </div>
     </div>

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
+use Spatie\Permission\Models\Role;
 
 class PatientController extends Controller
 {
@@ -51,6 +53,15 @@ class PatientController extends Controller
         $patient->jenis_kelamin = $request->jenis_kelamin;
         $patient->Golongan_darah = $request->Golongan_darah;
         $patient->save();
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->nik; // Hash password menggunakan NIK
+        $user->save();
+
+        // Assign role 'patient' ke user
+        $user->assignRole('patient');
 
         return redirect()->route('pasien')->with('success', 'Patient added successfully.');
     }

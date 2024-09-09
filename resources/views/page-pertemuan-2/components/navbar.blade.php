@@ -1,6 +1,6 @@
 <html>
 
-<nav class="bg-white w-full px-10 my-10">
+<nav class="bg-white bg-opacity-0 w-full px-10 my-10">
     <div class="flex justify-between items-center mx-auto">
         <p class="text-[#229799] font-bold text-xl">@yield('title')</p>
         <div class="flex items-center gap-4">
@@ -16,6 +16,7 @@
                 <input id="searchInput" type="text" placeholder="Search here.." autocomplete="off"
                     class="rounded-r-full text-lg px-3 focus:outline-none focus:border-none">
             @endif
+
         </div>
     </div>
 </nav>

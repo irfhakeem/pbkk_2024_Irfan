@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Doctor;
+use App\Models\User;
 use App\Models\HealthCenter;
 use App\Models\Specialization;
 use Illuminate\Support\Facades\Schema;
+
 
 class DoctorController extends Controller
 {
@@ -40,18 +42,24 @@ class DoctorController extends Controller
 
     function add(Request $request)
     {
-        $validate = $request->validate([
-            'sip' => 'required',
-            'nama' => 'required',
-            'email' => 'required',
-            'no_hp' => 'required',
-            'jenis_kelamin' => 'required',
-            'spesialis_id' => 'required',
-            'tanggal_lahir' => 'required',
-            'health_center_id' => 'required',
-        ]);
+        $doctor = new Doctor();
+        $doctor->sip = $request->sip;
+        $doctor->nama = $request->nama;
+        $doctor->email = $request->email;
+        $doctor->no_hp = $request->no_hp;
+        $doctor->jenis_kelamin = $request->jenis_kelamin;
+        $doctor->spesialis_id = $request->spesialis_id;
+        $doctor->tanggal_lahir = $request->tanggal_lahir;
+        $doctor->health_center_id = $request->health_center_id;
+        $doctor->save();
 
-        Doctor::create($validate);
+        $user = new User();
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = $request->sip;
+        $user->save();
+
+        $user->assignRole('doctor');
         return redirect()->route('doctor')->with('success');
     }
 

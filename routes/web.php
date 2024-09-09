@@ -11,13 +11,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\AppointmentController;
+use Illuminate\Support\Facades\Auth;
+
+// Welcome page
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Fallback routing
 Route::fallback(function () {
     return response()->view('fallback', ['message' => 'Halaman yang Anda cari tidak ditemukan.'], 404);
 });
-
-Route::redirect('/', '/page-pertemuan-2/sections/dashboard', 301);
 
 // Pertemuan 2
 Route::prefix('/page-pertemuan-2')->group(function () {
@@ -81,3 +85,20 @@ Route::prefix('/page-pertemuan-2')->group(function () {
         Route::put('/appointment/{id}', [AppointmentController::class, 'update'])->name('appointment.update');
     });
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard2');
+
+Route::redirect('/dashboard', '/page-pertemuan-2/sections/dashboard');
+
+Route::get('/assign-role', function () {
+    $user = Auth::user();
+
+    if ($user) {
+        $user->assignRole('admin');
+        return 'Role assigned successfully';
+    }
+
+    return 'User not found';
+})->name('assign.role');

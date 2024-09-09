@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="flex justify-end items-center mb-5">
-        <button id="addButton" class="bg-[#229799] px-4 py-[0.4rem] rounded-full items-center text-white">
+        <button id="addButton" class="bg-[#229799] px-4 py-[0.4rem] rounded-full items-center text-white hover:bg-[#317375]">
             Add New
         </button>
     </div>
@@ -13,11 +13,15 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 text-center">
                 <tr>
                     @foreach ($columns as $column)
-                        <th scope="col" class="px-4 py-2">
-                            {{ ucfirst(str_replace('_', ' ', $column)) }}
+                        <th scope="col" class="px-1 py-2 text-[12px]">
+                            @if (str_contains($column, 'id'))
+                                {{ ucfirst(str_replace('_', ' ', substr($column, 0, -3))) }}
+                            @else
+                                {{ ucfirst(str_replace('_', ' ', $column)) }}
+                            @endif
                         </th>
                     @endforeach
-                    <th scope="col" class="px-4 py-2">
+                    <th scope="col" class="py-2 text-xs">
                         Action
                     </th>
                 </tr>
@@ -26,19 +30,20 @@
                 @foreach ($medicalReports as $medicalReport)
                     <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
                         @foreach ($columns as $column)
-                            <td class="px-4 py-2 whitespace-nowrap">
+                            <td class="py-2 whitespace-nowrap text-[12px]">
                                 {{ $medicalReport->$column }}
                             </td>
                         @endforeach
-                        <td class="flex gap-3 px-4 py-2 justify-center">
+                        <td class="flex py-2 gap-3  justify-center items-center">
                             <a href="{{ route('medicalReport.edit', $medicalReport->medical_report_id) }}"
-                                class="font-medium text-blue-600 hover:underline">Edit</a>
+                                class="text-[11px] font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('medicalReport.delete', $medicalReport->medical_report_id) }}"
                                 method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this medicalReport with ID: {{ $medicalReport->medical_report_id }}?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="font-medium text-blue-600 hover:underline">Delete</button>
+                                <button type="submit"
+                                    class="text-[11px] font-medium text-blue-600 hover:underline">Delete</button>
                             </form>
                         </td>
                     </tr>
