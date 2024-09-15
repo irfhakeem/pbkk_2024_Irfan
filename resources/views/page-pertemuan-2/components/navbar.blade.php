@@ -2,9 +2,9 @@
 
 <nav class="bg-white bg-opacity-0 w-full px-10 my-10">
     <div class="flex justify-between items-center mx-auto">
-        <p class="text-[#229799] font-bold text-xl">@yield('title')</p>
+        <p class="text-[#229799] font-semibold text-xl tracking-wider">@yield('title')</p>
         <div class="flex items-center gap-4">
-            @if (Route::currentRouteName() !== 'dashboard')
+            @if (Route::currentRouteName() !== 'dashboard' && Route::currentRouteName() !== 'dashboardPatient')
                 <div class="px-2 bg-white">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="auto" viewBox="0 0 512 512"
                         class="fill-gray-400 "><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->

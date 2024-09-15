@@ -7,30 +7,34 @@ use App\Models\HealthCenter;
 use Illuminate\Http\Request;
 use App\Models\MedicalReport;
 use App\Models\Service;
+use App\Models\HealthCenterService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class MedicalReportController extends Controller
 {
-    //
     public function get()
     {
-        // Ambil data services dengan pagination
         $medicalReports = MedicalReport::orderBy('medical_report_id')->paginate(10);
-
-        // Ambil nama kolom dari tabel medicalReports
         $columns = Schema::getColumnListing('medical_reports');
 
-        // Kolom yang tidak ingin disertakan
         $excludedColumns = ['created_at', 'updated_at'];
 
-        $doctors = Doctor::all();
-        $healthCenters = HealthCenter::all();
-        $services = Service::all();
+        $email =  Auth::user()->email;
+        $doctor = Doctor::select('nama', 'doctor_id', 'health_center_id')->where('email', $email)->first();
+        $healthCenter = HealthCenter::select('nama')->where('health_center_id', $doctor->health_center_id)->first();
+        // dd($doctor, $healthCenter);
 
-        // Filter kolom yang tidak diinginkan
+        $healthCenterServices = HealthCenterService::select('service_id')->where('health_center_id', $doctor->health_center_id)->get();
+        $services = [];
+        foreach ($healthCenterServices as $healthCenterService) {
+            $services[] = Service::select('nama')->where('service_id', $healthCenterService->service_id)->first();
+        }
+
+
         $columns = array_diff($columns, $excludedColumns);
 
-        return view('page-pertemuan-2.sections.medical-report', compact('medicalReports', 'columns', 'doctors', 'healthCenters', 'services'));
+        return view('page-pertemuan-2.sections.medical-report', compact('medicalReports', 'columns', 'doctor', 'healthCenter', 'services'));
     }
 
     function delete($id)
@@ -44,10 +48,10 @@ class MedicalReportController extends Controller
 
         return redirect()->route('medicalReport')->with('error', 'Medical Report not found.');
     }
-
     function add(Request $request)
     {
         $validate = $request->validate([
+            'judul' => 'required',
             'patient_id' => 'required',
             'dokter' => 'required',
             'faskes' => 'required',
@@ -57,6 +61,8 @@ class MedicalReportController extends Controller
             'status' => 'required',
         ]);
 
+        // dd($validate);
+
         MedicalReport::create($validate);
         return redirect()->route('medicalReport')->with('success', 'Medical Report added successfully.');
     }
@@ -64,16 +70,26 @@ class MedicalReportController extends Controller
     function edit($id)
     {
         $medicalReport = MedicalReport::find($id);
-        $doctors = Doctor::all();
-        $healthCenters = HealthCenter::all();
-        $services = Service::all();
 
-        return view('page-pertemuan-2.sections.medical-report-edit', compact('medicalReport', 'doctors', 'healthCenters', 'services'));
+        $email =  Auth::user()->email;
+        $doctor = Doctor::select('nama', 'doctor_id', 'health_center_id')->where('email', $email)->first();
+        $healthCenter = HealthCenter::select('nama')->where('health_center_id', $doctor->health_center_id)->first();
+        // dd($doctor, $healthCenter);
+
+        $healthCenterServices = HealthCenterService::select('service_id')->where('health_center_id', $doctor->health_center_id)->get();
+        $services = [];
+        foreach ($healthCenterServices as $healthCenterService) {
+            $services[] = Service::select('nama')->where('service_id', $healthCenterService->service_id)->first();
+        }
+
+
+        return view('page-pertemuan-2.sections.medical-report-edit', compact('medicalReport', 'doctor', 'healthCenter', 'services'));
     }
 
     function update(Request $request, $id)
     {
         $validate = $request->validate([
+            'judul' => 'required',
             'patient_id' => 'required',
             'dokter' => 'required',
             'faskes' => 'required',

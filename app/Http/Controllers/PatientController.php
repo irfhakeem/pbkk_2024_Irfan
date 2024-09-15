@@ -2,14 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MedicalReport;
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class PatientController extends Controller
 {
+
+    public function getMyMedicalReports()
+    {
+        if (!Auth::user()->hasRole('patient')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $email = Auth::user()->email ?? null;
+        $patient = Patient::where('email', $email)->first();
+        $id = $patient->patient_id ?? null;
+
+        function detailMedicalReport($id)
+        {
+            $medicalReport = MedicalReport::find($id);
+            return view('page-pertemuan-2.sections.pasien-medical-report', compact('medicalReport'));
+        }
+
+        if ($id) {
+            $medicalReports = MedicalReport::where('patient_id', $id)->orderBy('created_at', direction: 'desc')->paginate(10);
+            // dd($medicalReports);
+            return view('page-pertemuan-2.sections.pasien-medical-report', compact('medicalReports'));
+        }
+
+        return redirect()->route('welcome')->with('error', 'Patient not found.');
+    }
+
+    public function getMyAppointments()
+    {
+        $email = Auth::user()->email ?? null;
+        $patient = Patient::where('email', $email)->first();
+        $id = $patient->patient_id ?? null;
+
+        if ($id) {
+            $appointments = Appointment::where('patient_id', $id)->orderBy('created_at', direction: 'desc')->paginate(10);
+            return view('page-pertemuan-2.sections.appointment', compact('appointments'));
+        }
+
+        return redirect()->route('welcome')->with('error', 'Patient not found.');
+    }
+
+
+
+    // Admin Page
     public function get()
     {
 
@@ -57,10 +102,9 @@ class PatientController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->nik; // Hash password menggunakan NIK
+        $user->password = $request->nik;
         $user->save();
 
-        // Assign role 'patient' ke user
         $user->assignRole('patient');
 
         return redirect()->route('pasien')->with('success', 'Patient added successfully.');

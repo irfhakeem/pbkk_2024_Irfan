@@ -14,7 +14,7 @@ class HealthCenter extends Model
     protected $fillable = [
         'nama',
         'alamat',
-        'no_hp',
+        'no_telp',
         'email',
     ];
 }

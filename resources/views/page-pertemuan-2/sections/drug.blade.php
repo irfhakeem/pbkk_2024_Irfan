@@ -1,6 +1,6 @@
 @extends('page-pertemuan-2.layout.base')
 
-@section('title', 'CRUD Drugs')
+@section('title', 'Drugs')
 
 @section('content')
     <div class="flex justify-end items-center mb-5">
@@ -31,7 +31,8 @@
                             </td>
                         @endforeach
                         <td class="flex gap-3 px-4 py-2 justify-center">
-                            <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                            <a href="{{ route('drug.edit', $drug->drug_id) }}"
+                                class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('drug.delete', $drug->drug_id) }}" method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this drug with ID: {{ $drug->drug_id }}?');">
                                 @csrf

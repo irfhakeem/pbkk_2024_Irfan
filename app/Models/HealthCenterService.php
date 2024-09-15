@@ -11,4 +11,9 @@ class HealthCenterService extends Model
 
     protected $table = 'health_center_services';
     protected $primaryKey = 'health_center_services_id';
+
+    protected $fillable = [
+        'health_center_id',
+        'service_id',
+    ];
 }

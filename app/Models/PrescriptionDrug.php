@@ -9,5 +9,10 @@ class PrescriptionDrug extends Model
 {
     use HasFactory;
     protected $table = 'prescription_drugs';
-    protected $primaryKey = 'prescription_drug_id';
+    protected $primaryKey = 'prescription_drugs_id';
+
+    protected $fillable = [
+        'prescription_id',
+        'drug_id',
+    ];
 }

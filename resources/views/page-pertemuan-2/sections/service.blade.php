@@ -1,6 +1,6 @@
 @extends('page-pertemuan-2.layout.base')
 
-@section('title', 'CRUD Services')
+@section('title', 'Services')
 
 @section('content')
     <div class="flex justify-end items-center mb-5">
@@ -31,7 +31,8 @@
                             </td>
                         @endforeach
                         <td class="flex gap-3 px-4 py-2 justify-center">
-                            <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                            <a href="{{ route('service.edit', $service->service_id) }}"
+                                class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('service.delete', $service->service_id) }}" method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this service with ID: {{ $service->service_id }}?');">
                                 @csrf

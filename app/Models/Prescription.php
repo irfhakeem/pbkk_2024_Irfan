@@ -12,6 +12,7 @@ class Prescription extends Model
     protected $table = 'prescriptions';
     protected $primaryKey = 'prescription_id';
     protected $fillable = [
+        'patient_id',
         'dokter',
         'instruksi',
         'date',

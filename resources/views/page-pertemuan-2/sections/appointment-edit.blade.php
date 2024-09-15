@@ -10,7 +10,8 @@
             <div class="relative z-0 w-full mb-5 group">
                 <input id="patient_id" type="text" name="patient_id" autocomplete="off"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
-                    placeholder="" value="{{ $appointment->patient_id }}" required>
+                    placeholder="" value="{{ $appointment->patient_id }}" required
+                    {{ Auth::user()->hasRole('patient') ? 'readonly' : '' }}>
                 <label for="patient_id"
                     class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#229799]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Patient
                     ID</label>
@@ -38,11 +39,12 @@
                     <select id="doctor_id" name="doctor_id"
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($doctors as $doctor)
-                            <option value="{{ $doctor->doctor_id }}">
-                                {{ $doctor->doctor_id == $appointment->doctor_id ? 'selected' : '' }}
+                            <option value="{{ $doctor->doctor_id }}"
+                                {{ $doctor->doctor_id == $appointment->doctor_id ? 'selected' : '' }}>
                                 {{ $doctor->nama }}
                             </option>
                         @endforeach
+
                     </select>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
@@ -50,8 +52,8 @@
                     <select id="health_center_id" name="health_center_id"
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($healthCenters as $healthCenter)
-                            <option value="{{ $healthCenter->health_center_id }}">
-                                {{ $healthCenter->health_center_id == $appointment->health_center_id ? 'selected' : '' }}
+                            <option value="{{ $healthCenter->health_center_id }}"
+                                {{ $healthCenter->health_center_id == $appointment->health_center_id ? 'selected' : '' }}>
                                 {{ $healthCenter->nama }}
                             </option>
                         @endforeach
@@ -62,8 +64,8 @@
                     <select id="service_id" name="service_id"
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                         @foreach ($services as $service)
-                            <option value="{{ $service->service_id }}">
-                                {{ $service->service_id == $appointment->service_id ? 'selected' : '' }}
+                            <option value="{{ $service->service_id }}"
+                                {{ $service->service_id == $appointment->service_id ? 'selected' : '' }}>
                                 {{ $service->nama }}
                             </option>
                         @endforeach

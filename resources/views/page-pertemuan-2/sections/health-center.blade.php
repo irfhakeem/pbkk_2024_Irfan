@@ -1,6 +1,6 @@
 @extends('page-pertemuan-2.layout.base')
 
-@section('title', 'CRUD Health Centers')
+@section('title', 'Health Centers')
 
 @section('content')
     <div class="flex justify-end items-center mb-5">
@@ -31,7 +31,8 @@
                             </td>
                         @endforeach
                         <td class="flex gap-3 px-4 py-2 justify-center">
-                            <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                            <a href="{{ route('healthCenter.edit', $healthCenter->health_center_id) }}"
+                                class="font-medium text-blue-600 hover:underline">Edit</a>
                             <form action="{{ route('healthCenter.delete', $healthCenter->health_center_id) }}"
                                 method="POST"
                                 onsubmit="return confirm('Are you sure you want to delete this healthCenter with ID: {{ $healthCenter->health_center_id }}?');">
@@ -70,11 +71,24 @@
                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-[#229799]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Alamat Fasilitas Kesehatan</label>
                 </div>
-
+                <div class="relative z-0 w-full mb-5 group">
+                    <label for="service_id" class="block mb-2 text-sm text-gray-500">Service</label>
+                    <div class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
+                        <div class="grid grid-cols-3">
+                            @foreach ($services as $service)
+                                <div class="flex items-center mb-2">
+                                    <input type="checkbox" id="service_{{ $service->service_id }}" name="service_id[]"
+                                        value="{{ $service->service_id }}" class="mr-2">
+                                    <label for="service_{{ $service->service_id }}">{{ $service->nama }}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
 
                 <div class="grid md:grid-cols-2 md:gap-6">
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="email" name="email" id="email"
+                        <input type="text" name="email" id="email"
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
                             placeholder=" " required />
                         <label for="email"
@@ -82,7 +96,7 @@
                             Email</label>
                     </div>
                     <div class="relative z-0 w-full mb-5 group">
-                        <input type="no_telp" pattern="^08[0-9]{8,13}$" name="no_telp" id="no_telp"
+                        <input type="text" pattern="^08[0-9]{8,13}$" name="no_telp" id="no_telp"
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-[#229799] peer"
                             placeholder=" " required />
                         <label for="no_telp"

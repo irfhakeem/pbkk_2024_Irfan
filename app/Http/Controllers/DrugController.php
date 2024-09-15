@@ -12,7 +12,7 @@ class DrugController extends Controller
     //
     public function get()
     {
-        $drugs = Drug::paginate(10);
+        $drugs = Drug::orderBy('drug_id')->paginate(10);
 
         $columns = Schema::getColumnListing('drugs');
 
@@ -56,7 +56,7 @@ class DrugController extends Controller
 
         $drug = Drug::find($id);
 
-        return view('page-pertemuan-2.sections.doctor-edit', compact('doctors', 'healthCenters', 'specializations'));
+        return view('page-pertemuan-2.sections.drug-edit', compact('drug'));
     }
 
     function update(Request $request, $id)
@@ -70,6 +70,6 @@ class DrugController extends Controller
         $drug = Drug::find($id);
         $drug->update($request->all());
 
-        return redirect()->route('doctor')->with('success', 'Doctor updated successfully.');
+        return redirect()->route('drug')->with('success', 'drug updated successfully.');
     }
 }

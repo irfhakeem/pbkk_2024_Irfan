@@ -22,11 +22,19 @@ class DoctorFactory extends Factory
             'sip' => fake()->unique()->randomNumber(9, true),
             'nama' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'no_hp' => fake()->phoneNumber(),
+            'no_hp' => $this->generatePhoneNumber(),
             'jenis_kelamin' => fake()->randomElement(['L', 'P']),
             'spesialis_id' => fake()->randomElement(Specialization::pluck('spesialis_id')->toArray()),
             'tanggal_lahir' => fake()->date(),
             'health_center_id' => fake()->randomElement(HealthCenter::pluck('health_center_id')->toArray()),
         ];
+    }
+
+    private function generatePhoneNumber()
+    {
+        $prefix = '08';
+        $length = 12 - strlen($prefix);
+        $number = $prefix . $this->faker->numerify(str_repeat('#', $length));
+        return $number;
     }
 }

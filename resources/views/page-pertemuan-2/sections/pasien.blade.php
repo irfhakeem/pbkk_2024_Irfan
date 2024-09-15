@@ -1,6 +1,6 @@
 @extends('page-pertemuan-2.layout.base')
 
-@section('title', 'CRUD Patients')
+@section('title', 'Patients')
 
 @section('content')
     <div class="flex justify-end items-center mb-5">
@@ -8,6 +8,7 @@
             Add New
         </button>
     </div>
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 text-center">
@@ -26,7 +27,7 @@
                 @foreach ($patients as $patient)
                     <tr class="odd:bg-white even:bg-gray-50 border-b border-gray-200">
                         @foreach ($columns as $column)
-                            <td class="py-2 whitespace-nowrap text-[11px]">
+                            <td class="py-2 whitespace-nowrap text-[12px]">
                                 {{ $patient->$column }}
                             </td>
                         @endforeach

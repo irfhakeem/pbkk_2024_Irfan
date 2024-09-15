@@ -40,7 +40,7 @@ class SpecializationController extends Controller
     function add(Request $request)
     {
         $request->validate([
-            'nama' => 'required',
+            'spesialisasi' => 'required',
         ]);
 
         Specialization::create($request->all());
@@ -56,7 +56,7 @@ class SpecializationController extends Controller
     function update(Request $request, $id)
     {
         $request->validate([
-            'nama' => 'required',
+            'spesialisasi' => 'required',
         ]);
 
         $specialization = Specialization::find($id);
