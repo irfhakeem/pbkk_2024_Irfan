@@ -34,9 +34,9 @@ class DashboardController extends Controller
         $email = Auth::user()->email ?? null;
         $patient = Patient::where('email', $email)->first();
         // dd($id);
-        $medicalReports = MedicalReport::where('patient_id', $patient->patient_id)->get('nama', 'dokter', 'date', 'faskes');
-        $appointments = Appointment::where('patient_id', $patient->patient_id)->get('date');
-        $prescriptions = Prescription::where('patient_id', $patient->patient_id)->get('instruksi', 'date');
+        $medicalReports = MedicalReport::where('patient_id', $patient->patient_id)->count();
+        $appointments = Appointment::where('patient_id', $patient->patient_id)->count();
+        $prescriptions = Prescription::where('patient_id', $patient->patient_id)->count();
 
         return view('page-pertemuan-2.sections.pasien-dashboard', compact('patient', 'medicalReports', 'appointments', 'prescriptions'));
     }

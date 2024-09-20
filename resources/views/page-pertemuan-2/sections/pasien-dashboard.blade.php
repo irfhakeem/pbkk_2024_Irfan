@@ -7,7 +7,7 @@
 @endphp
 
 @section('content')
-    <div class="flex flex-col justify-between">
+    <div class="flex flex-col justify-between gap-28">
         {{-- Card Bio --}}
         <div class="flex gap-10 items-center">
             <img src="https://matafoto.co/wp-content/uploads/2021/03/merah-min.jpg" alt=""
@@ -29,9 +29,9 @@
 
         <div class="flex flex-row">
 
-            <p class="bg-white px-8 py-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias porro, tenetur
+            {{-- <p class="bg-white px-8 py-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias porro, tenetur
                 placeat non quis corporis exercitationem voluptates aperiam debitis consequuntur vero iure, unde numquam
-                saepe doloribus cum sunt aspernatur tempora.</p>
+                saepe doloribus cum sunt aspernatur tempora.</p> --}}
 
         </div>
 
@@ -48,7 +48,7 @@
                 <div
                     class="px-4 pb-4 pt-6 bg-white rounded-xl h-40 mt-7 items-center flex flex-col gap-3 border-[1px] border-gray-300 w-48">
                     <p> Medical Reports</p>
-                    <p class="text-5xl font-medium text-gray-300">{{ $medicalReports->count() }}</p>
+                    <p class="text-5xl font-medium text-gray-300">{{ $medicalReports }}</p>
                 </div>
             </div>
             <div class="flex flex-col items-center">
@@ -56,7 +56,7 @@
                 <div
                     class="px-4 pb-4 pt-6 bg-white rounded-xl h-40 mt-7 items-center flex flex-col gap-3 border-[1px] border-gray-300 w-48">
                     <p> Prescriptions </p>
-                    <p class="text-5xl font-medium text-gray-300"> {{ $prescriptions->count() }} </p>
+                    <p class="text-5xl font-medium text-gray-300"> {{ $prescriptions }} </p>
                 </div>
             </div>
             <div class="flex flex-col items-center">
@@ -64,7 +64,7 @@
                 <div
                     class="px-4 pb-4 pt-6 bg-white rounded-xl h-40 mt-7 items-center flex flex-col gap-3 border-[1px] border-gray-300 w-48">
                     <p> Appointments </p>
-                    <p class="text-5xl font-medium text-gray-300"> {{ $appointments->count() }} </p>
+                    <p class="text-5xl font-medium text-gray-300"> {{ $appointments }} </p>
                 </div>
             </div>
         </div>

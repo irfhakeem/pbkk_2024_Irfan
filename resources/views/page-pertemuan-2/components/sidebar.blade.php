@@ -56,8 +56,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('prescription') }}"
-                        class="my-2 flex items-center justify-start px-5 py-2 transition-colors ease-in-out duration-100 hover:bg-gradient-to-r from-[#22979960] to-[#22979930] hover:text-white hover:shadow-[#22979930] hover:shadow-md rounded-full cursor-pointer text-gray-400 {{ request()->routeIs('prescription') ? 'bg-gradient-to-r from-[#229799] to-[#22979960] shadow-[#22979960] shadow-md text-white' : '' }}">
+                    <a href="{{ route('prescriptionPatient') }}"
+                        class="my-2 flex items-center justify-start px-5 py-2 transition-colors ease-in-out duration-100 hover:bg-gradient-to-r from-[#22979960] to-[#22979930] hover:text-white hover:shadow-[#22979930] hover:shadow-md rounded-full cursor-pointer text-gray-400 {{ request()->routeIs('prescriptionPatient') ? 'bg-gradient-to-r from-[#229799] to-[#22979960] shadow-[#22979960] shadow-md text-white' : '' }}">
                         <p class="text-md flex-1">My Prescriptions</p>
                     </a>
                 </li>

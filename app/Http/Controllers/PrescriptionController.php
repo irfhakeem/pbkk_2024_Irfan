@@ -44,6 +44,7 @@ class PrescriptionController extends Controller
     function add(Request $request)
     {
         $request->validate([
+            'penyakit' => 'required',
             'instruksi' => 'required',
             'dokter' => 'required',
             'date' => 'required',
@@ -54,7 +55,7 @@ class PrescriptionController extends Controller
 
         // dd($request->all());
 
-        $prescription = Prescription::create($request->only('instruksi', 'dokter', 'date', 'patient_id'));
+        $prescription = Prescription::create($request->only('penyakit', 'instruksi', 'dokter', 'date', 'patient_id'));
 
         foreach ($request->drug_id as $drugId) {
             PrescriptionDrug::create([
@@ -78,6 +79,7 @@ class PrescriptionController extends Controller
     {
         $request->validate([
             'instruksi' => 'required',
+            'penyakit' => 'required',
             'dokter' => 'required',
             'date' => 'required',
             'patient_id' => 'required',
@@ -86,7 +88,7 @@ class PrescriptionController extends Controller
         ]);
 
         $prescription = Prescription::find($id);
-        $prescription->update($request->only('instruksi', 'dokter', 'date', 'patient_id'));
+        $prescription->update($request->only('penyakit', 'instruksi', 'dokter', 'date', 'patient_id'));
 
         $existingDrugs = PrescriptionDrug::where('prescription_id', $id)->pluck('drug_id')->toArray();
 

@@ -6,6 +6,7 @@ use App\Models\MedicalReport;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Appointment;
+use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,6 @@ class PatientController extends Controller
 
     public function getMyMedicalReports()
     {
-        if (!Auth::user()->hasRole('patient')) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $email = Auth::user()->email ?? null;
         $patient = Patient::where('email', $email)->first();
         $id = $patient->patient_id ?? null;
@@ -30,9 +27,23 @@ class PatientController extends Controller
         }
 
         if ($id) {
-            $medicalReports = MedicalReport::where('patient_id', $id)->orderBy('created_at', direction: 'desc')->paginate(10);
+            $medicalReports = MedicalReport::where('patient_id', $id)->orderBy('created_at', direction: 'desc')->paginate(5);
             // dd($medicalReports);
             return view('page-pertemuan-2.sections.pasien-medical-report', compact('medicalReports'));
+        }
+
+        return redirect()->route('welcome')->with('error', 'Patient not found.');
+    }
+
+    public function getMyPrescription()
+    {
+        $email = Auth::user()->email ?? null;
+        $patient = Patient::where('email', $email)->first();
+        $id = $patient->patient_id ?? null;
+
+        if ($id) {
+            $prescriptions = Prescription::where('patient_id', $id)->orderBy('created_at', direction: 'desc')->paginate(10);
+            return view('page-pertemuan-2.sections.pasien-prescription', compact('prescriptions'));
         }
 
         return redirect()->route('welcome')->with('error', 'Patient not found.');

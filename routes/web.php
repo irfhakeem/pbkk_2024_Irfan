@@ -48,6 +48,7 @@ Route::prefix('/sections')->group(function () {
     Route::middleware(['auth', 'can:view patient dashboard'])->group(function () {
         Route::get('/medical-reports-patient', [PatientController::class, 'getMyMedicalReports'])->name('medicalReportsPatient');
         Route::get('/appointments-patient', [PatientController::class, 'getMyAppointments'])->name('appointmentsPatient');
+        Route::get('/prescription-patient', [PatientController::class, 'getMyPrescription'])->name('prescriptionPatient');
     });
 
     Route::middleware(['auth', 'can:add patients'])->group(function () {
