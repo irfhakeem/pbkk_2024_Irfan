@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DoctorGetBySipRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
@@ -90,5 +91,26 @@ class DoctorController extends Controller
         $doctor->update($validate);
 
         return redirect()->route('doctor')->with('success', 'Doctor updated successfully.');
+    }
+
+    // API
+    public function getDoctor()
+    {
+        $doctors = Doctor::all();
+        return response()->json($doctors);
+    }
+
+    public function getDoctorBySip(DoctorGetBySipRequest $request)
+    {
+        $sip = $request->sip;
+        $doctor = Doctor::find('sip', $sip)->first();
+
+        if ($doctor) {
+            return response()->json($doctor);
+        }
+
+        return response()->json([
+            'message' => 'Doctor not found'
+        ], 400);
     }
 }

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\AppointmentController;
-use App\Models\Prescription;
 use Illuminate\Support\Facades\Auth;
 
 

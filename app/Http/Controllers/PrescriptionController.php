@@ -70,9 +70,10 @@ class PrescriptionController extends Controller
     public function edit($id)
     {
         $prescription = Prescription::find($id);
-        $doctors = Doctor::select('nama', 'dokter_id')->get();
-        $prescriptionDrugs = PrescriptionDrug::where('prescription_id', $id)->get();
-        return view('page-pertemuan-2.sections.prescription-edit', compact('prescription', 'doctors', 'prescriptionDrugs'));
+        $doctors = Doctor::select('nama', 'doctor_id')->get();
+        $drugs = Drug::select('drug_id', 'nama')->get();
+        $prescriptionDrugs = PrescriptionDrug::where('prescription_id', $id)->pluck('drug_id')->toArray();
+        return view('page-pertemuan-2.sections.prescription-edit', compact('prescription', 'doctors', 'prescriptionDrugs', 'drugs'));
     }
 
     function update(Request $request, $id)
@@ -89,7 +90,6 @@ class PrescriptionController extends Controller
 
         $prescription = Prescription::find($id);
         $prescription->update($request->only('penyakit', 'instruksi', 'dokter', 'date', 'patient_id'));
-
         $existingDrugs = PrescriptionDrug::where('prescription_id', $id)->pluck('drug_id')->toArray();
 
         foreach ($existingDrugs as $existingDrugId) {

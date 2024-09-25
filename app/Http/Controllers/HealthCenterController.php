@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddHealthCenterRequest;
 use Illuminate\Http\Request;
 use App\Models\HealthCenter;
 use App\Models\HealthCenterService;
@@ -110,5 +111,27 @@ class HealthCenterController extends Controller
         }
 
         return redirect()->route('healthCenter')->with('success', 'Health Center updated successfully.');
+    }
+
+    function getHealthCenter()
+    {
+        $healthCenters = HealthCenter::all();
+        return response()->json($healthCenters);
+    }
+
+    function addHealthCenter(AddHealthCenterRequest $request)
+    {
+        $healthCenter = HealthCenter::create($request->only('nama', 'alamat', 'no_telp', 'email'));
+
+        foreach ($request->service_id as $serviceId) {
+            HealthCenterService::create([
+                'health_center_id' => $healthCenter->health_center_id,
+                'service_id' => $serviceId
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Health Center and services added successfully.'
+        ]);
     }
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="py-10 bg-white w-full">
+    <div class=" bg-white w-full">
         <form action="{{ route('healthCenter.update', $healthCenter->health_center_id) }}" method="POST">
             @csrf
             @method('PUT')

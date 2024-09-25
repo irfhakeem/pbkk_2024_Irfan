@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserGetByIdRequest;
 use App\Models\MedicalReport;
 use Illuminate\Http\Request;
 use App\Models\Patient;
@@ -147,5 +148,53 @@ class PatientController extends Controller
         $patient = Patient::find($id);
         $patient->update($validate);
         return redirect()->route('pasien')->with('success', 'Patient updated successfully.');
+    }
+
+    // API
+
+    // Get all patients
+    function getPatient()
+    {
+        $patients = Patient::all();
+        return response()->json($patients);
+    }
+
+    // Get patient by id
+    public function getPatientByNik(UserGetByIdRequest $request)
+    {
+        $nik = $request->validated()['nik'];
+        $patient = Patient::where('nik', $nik)->first();
+
+        if ($patient) {
+            return response()->json($patient);
+        }
+
+        return response()->json([
+            'message' => 'Patient not found'
+        ], 400);
+    }
+
+    public function addPatient(Request $request)
+    {
+        $validate = $request->validate([
+            'nik' => 'required',
+            'name' => 'required',
+            'tanggal_lahir' => 'required',
+            'email' => 'required',
+            'no_hp' => 'required',
+            'Golongan_darah' => 'required',
+            'jenis_kelamin' => ['required', 'in:L,P'],
+        ]);
+
+        if ($validate) {
+            Patient::create($validate);
+            return response()->json([
+                'messege' => 'Patient added successfully'
+            ], 200);
+        }
+
+        return response()->json([
+            "messege" => "Failed to add patient"
+        ], 400);
     }
 }
