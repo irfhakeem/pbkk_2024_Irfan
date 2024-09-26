@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use Illuminate\Support\Facades\Schema;
@@ -68,4 +70,7 @@ class ServiceController extends Controller
 
         return redirect()->route('service')->with('success', 'Service updated successfully.');
     }
+
+    // API
+
 }

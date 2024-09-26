@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddMedicalReportRequest;
 use App\Models\Doctor;
 use App\Models\HealthCenter;
 use Illuminate\Http\Request;

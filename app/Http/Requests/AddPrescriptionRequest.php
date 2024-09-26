@@ -3,9 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateSpecializationRequest extends FormRequest
+class AddPrescriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +25,21 @@ class UpdateSpecializationRequest extends FormRequest
     {
         return [
             //
-            'spesialisasi' => ["required", "string"],
+            'penyakit' => 'required',
+            'instruksi' => 'required',
+            'dokter' => 'required|exists:doctors,nama',
+            'date' => 'required',
+            'patient_id' => 'required|exists:patients,patient_id',
+            'drug_id' => 'required|array',
+            'drug_id.*' => 'exists:drugs,drug_id',
         ];
     }
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'errors' => $validator->errors(),
-            'message' => 'Validation error'
+            'message' => 'The given data was invalid.'
         ], 422));
     }
 }

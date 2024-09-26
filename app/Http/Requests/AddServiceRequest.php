@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GetDoctorByIdRequest extends FormRequest
+class AddServiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,18 +24,12 @@ class GetDoctorByIdRequest extends FormRequest
     {
         return [
             //
-            "doctor_id" => ["required", "numeric"],
+            'nama' => ['required', 'string', 'max:100'],
         ];
     }
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new (response()->json(
-            [
-                "error" => $validator->errors(),
-                "messege" => "Please check your input",
-            ],
-            412
-        ));
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 }

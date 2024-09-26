@@ -6,15 +6,14 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UserGetByIdRequest extends FormRequest
+class UpdatePrescriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        // Ubah ini menjadi true atau tambahkan logika otorisasi
-        return true;
+        return false;
     }
 
     /**
@@ -25,23 +24,22 @@ class UserGetByIdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required', 'numeric'],
+            //
+            'penyakit' => 'required',
+            'instruksi' => 'required',
+            'dokter' => 'required',
+            'date' => 'required',
+            'patient_id' => 'required',
+            'drug_id' => 'required|array',
+            'drug_id.*' => 'exists:drugs,drug_id',
         ];
     }
 
-    /**
-     * Handle a failed validation attempt.
-     *
-     * @param  \Illuminate\Contracts\Validation\Validator  $validator
-     * @return void
-     *
-     * @throws \Illuminate\Http\Exceptions\HttpResponseException
-     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'errors' => $validator->errors(),
-            'message' => 'Validation failed'
+            'message' => 'Please Input Correct Data'
         ], 422));
     }
 }

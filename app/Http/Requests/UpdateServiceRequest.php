@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class GetHealthCenterByIdRequest extends FormRequest
+class UpdateServiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,18 +24,15 @@ class GetHealthCenterByIdRequest extends FormRequest
     {
         return [
             //
-            "health_center_id" => ["required", "numeric"],
+            'nama' => ['required', 'string', 'max:100', 'min:3'],
         ];
     }
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new (response()->json(
-            [
-                "error" => $validator->errors(),
-                "messege" => "Please check your input",
-            ],
-            412
-        ));
+        throw new HttpResponseException(response()->json([
+            'error' => $validator->errors(),
+            'messege' => 'The given data was invalid'
+        ], 422));
     }
 }

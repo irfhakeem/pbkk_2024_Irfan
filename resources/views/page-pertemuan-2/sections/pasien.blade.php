@@ -34,12 +34,10 @@
                         <td class="flex gap-3 py-2 justify-center">
                             <a href="{{ route('pasien.edit', $patient->patient_id) }}"
                                 class="font-medium text-blue-600 hover:underline">Edit</a>
-                            <form action="{{ route('pasien.delete', $patient->patient_id) }}" method="POST"
-                                onsubmit="return confirm('Are you sure you want to delete this patient with ID: {{ $patient->patient_id }}?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="font-medium text-blue-600 hover:underline">Delete</button>
-                            </form>
+                            <button onclick="deletePatient({{ $patient->patient_id }})"
+                                class="font-medium text-blue-600 hover:underline">
+                                Delete
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -150,4 +148,30 @@
         closeModalButton.addEventListener('click', closeModal);
         addButton.addEventListener('click', openModal);
     });
+
+    async function deletePatient(patientId) {
+        if (confirm('Are you sure you want to delete this patient with ID: ' + patientId + '?')) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/delete-patient/${patientId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer {{ Auth::user()->api_token }}'
+                    },
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message || 'Patient deleted successfully.');
+                    location.reload();
+                } else {
+                    alert('Failed to delete the patient. ' + (data.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Something went wrong. Please try again later.');
+            }
+        }
+    }
 </script>@endsection

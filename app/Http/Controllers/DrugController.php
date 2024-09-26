@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddDrugRequest;
+use App\Http\Requests\UpdateDrugRequest;
 use Illuminate\Http\Request;
 use App\Models\Drug;
 use Illuminate\Support\Facades\Schema;

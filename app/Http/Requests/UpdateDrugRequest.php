@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DeleteHealthCenterRequest extends FormRequest
+class UpdateDrugRequest extends FormRequest
+
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +25,16 @@ class DeleteHealthCenterRequest extends FormRequest
     {
         return [
             //
-            'health_center_id' => 'required|numeric|exists:health_centers,
-            health_center_id',
-
+            'nama' => ['required', 'string', 'max:100', 'min:3'],
+            'jenis' => ['required', 'string', 'max:100', "in:Tablet,Cair,Kapsul,Salep"],
+            'satuan' => ['required', 'string', 'max:100', "in:mg,ml,gram"],
         ];
     }
-
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new (response()->json([
-            "errors" => $validator->errors(),
-            "messege" => "Please Input Correct Data",
+        throw new HttpResponseException(response()->json([
+            'error' => $validator->errors(),
+            'messege' => 'The given data was invalid'
         ], 422));
     }
 }

@@ -23,7 +23,6 @@ class UpdateHealthCenterRequest extends FormRequest
     {
         return [
             //
-            'health_center_id' => 'required|numeric',
             'nama' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required',
