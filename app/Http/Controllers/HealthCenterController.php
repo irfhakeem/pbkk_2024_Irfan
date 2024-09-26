@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddHealthCenterRequest;
+use App\Http\Requests\GetHealthCenterByIdRequest;
+use App\Http\Requests\UpdateHealthCenterRequest;
 use Illuminate\Http\Request;
 use App\Models\HealthCenter;
 use App\Models\HealthCenterService;
@@ -119,6 +121,20 @@ class HealthCenterController extends Controller
         return response()->json($healthCenters);
     }
 
+    function getHealthCenterById(GetHealthCenterByIdRequest $request)
+    {
+        $healthCenter = HealthCenter::find($request->health_center_id);
+        $healthCenter->services = HealthCenterService::where('health_center_id', $healthCenter->health_center_id)->pluck('service_id')->toArray();
+
+        if ($healthCenter) {
+            return response()->json($healthCenter);
+        }
+
+        return response()->json([
+            'message' => 'Health Center not found.'
+        ], 400);
+    }
+
     function addHealthCenter(AddHealthCenterRequest $request)
     {
         $healthCenter = HealthCenter::create($request->only('nama', 'alamat', 'no_telp', 'email'));
@@ -130,8 +146,63 @@ class HealthCenterController extends Controller
             ]);
         }
 
+        $healthCenter->services = HealthCenterService::where('health_center_id', $healthCenter->health_center_id)->pluck('service_id')->toArray();
+
         return response()->json([
-            'message' => 'Health Center and services added successfully.'
+            'message' => 'Health Center and services added successfully.',
+            'data' => $healthCenter
         ]);
+    }
+
+    function deleteHealthCenter(GetHealthCenterByIdRequest $request)
+    {
+        $healthCenter = HealthCenter::find($request->health_center_id);
+
+        if ($healthCenter) {
+            $healthCenter->delete();
+            return response()->json([
+                'message' => 'Health Center deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Health Center not found.'
+        ], 400);
+    }
+
+    function updateHealthCenter(UpdateHealthCenterRequest $request)
+    {
+        $healthCenter = HealthCenter::find($request->health_center_id);
+
+        if ($healthCenter) {
+            $healthCenter->update($request->only('nama', 'alamat', 'no_telp', 'email'));
+
+            $existingServices = HealthCenterService::where('health_center_id', $healthCenter->health_center_id)->pluck('service_id')->toArray();
+
+            foreach ($existingServices as $existingServiceId) {
+                if (!in_array($existingServiceId, $request->service_id)) {
+                    HealthCenterService::where('health_center_id', $healthCenter->health_center_id)
+                        ->where('service_id', $existingServiceId)
+                        ->delete();
+                }
+            }
+
+            foreach ($request->service_id as $serviceId) {
+                if (!in_array($serviceId, $existingServices)) {
+                    HealthCenterService::create([
+                        'health_center_id' => $healthCenter->health_center_id,
+                        'service_id' => $serviceId
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'message' => 'Health Center updated successfully.',
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Health Center not found.'
+        ], 400);
     }
 }

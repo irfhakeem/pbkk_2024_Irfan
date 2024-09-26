@@ -3,17 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DoctorGetBySipRequest extends FormRequest
+class DeleteHealthCenterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,18 +23,17 @@ class DoctorGetBySipRequest extends FormRequest
     {
         return [
             //
-            'sip' => [
-                'required',
-                'numeric',
-                'max:9'
-            ]
+            'health_center_id' => 'required|numeric|exists:health_centers,
+            health_center_id',
+
         ];
     }
-    protected function failedValidation(Validator $validator)
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            'errors' => $validator->errors(),
-            'message' => 'Validation failed'
+        throw new (response()->json([
+            "errors" => $validator->errors(),
+            "messege" => "Please Input Correct Data",
         ], 422));
     }
 }

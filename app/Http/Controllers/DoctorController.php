@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddDoctorRequest;
 use App\Http\Requests\DoctorGetBySipRequest;
+use App\Http\Requests\GetDoctorByIdRequest;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\User;
@@ -100,10 +102,11 @@ class DoctorController extends Controller
         return response()->json($doctors);
     }
 
-    public function getDoctorBySip(DoctorGetBySipRequest $request)
+    public function getDoctorById(GetDoctorByIdRequest $request)
     {
-        $sip = $request->sip;
-        $doctor = Doctor::find('sip', $sip)->first();
+        $validated = $request->validated();
+        $doctor_id = $validated['doctor_id'];
+        $doctor = Doctor::where('doctor_id', $doctor_id)->first();
 
         if ($doctor) {
             return response()->json($doctor);
@@ -112,5 +115,38 @@ class DoctorController extends Controller
         return response()->json([
             'message' => 'Doctor not found'
         ], 400);
+    }
+
+    public function addDoctor(AddDoctorRequest $request)
+    {
+        // Validasi otomatis dilakukan oleh FormRequest, jadi tidak perlu pengecekan manual
+        $validated = $request->validated();
+
+        // Membuat dan menyimpan data dokter
+        $doctor = new Doctor();
+        $doctor->sip = $validated['sip'];
+        $doctor->nama = $validated['nama'];
+        $doctor->email = $validated['email'];
+        $doctor->no_hp = $validated['no_hp'];
+        $doctor->jenis_kelamin = $validated['jenis_kelamin'];
+        $doctor->spesialis_id = $validated['spesialis_id'];
+        $doctor->tanggal_lahir = $validated['tanggal_lahir'];
+        $doctor->health_center_id = $validated['health_center_id'];
+        $doctor->save();
+
+        $user = new User();
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = $request->sip;
+        $user->save();
+
+        // Menetapkan role 'doctor' ke user
+        $user->assignRole('doctor');
+
+        // Mengembalikan response
+        return response()->json([
+            'message' => 'Doctor added successfully',
+            'data' => $doctor
+        ]);
     }
 }

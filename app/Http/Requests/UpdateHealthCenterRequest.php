@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddHealthCenterRequest extends FormRequest
+class UpdateHealthCenterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,7 @@ class AddHealthCenterRequest extends FormRequest
     {
         return [
             //
+            'health_center_id' => 'required|numeric',
             'nama' => 'required',
             'alamat' => 'required',
             'no_telp' => 'required',

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePatientRequest;
 use App\Http\Requests\UserGetByIdRequest;
+use App\Http\Requests\DeletePatientRequest;
 use App\Models\MedicalReport;
 use Illuminate\Http\Request;
 use App\Models\Patient;
@@ -160,10 +162,10 @@ class PatientController extends Controller
     }
 
     // Get patient by id
-    public function getPatientByNik(UserGetByIdRequest $request)
+    public function getPatientById(UserGetByIdRequest $request)
     {
-        $nik = $request->validated()['nik'];
-        $patient = Patient::where('nik', $nik)->first();
+        $patient_id = $request->validated()['patient_id'];
+        $patient = Patient::where('patient_id', $patient_id)->first();
 
         if ($patient) {
             return response()->json($patient);
@@ -187,14 +189,53 @@ class PatientController extends Controller
         ]);
 
         if ($validate) {
-            Patient::create($validate);
+            $patient = Patient::create($validate);
+            $patient->assignRole('patient');
+
             return response()->json([
-                'messege' => 'Patient added successfully'
+                'messege' => 'Patient added successfully',
+                'data' => $patient
             ], 200);
         }
 
         return response()->json([
             "messege" => "Failed to add patient"
         ], 400);
+    }
+
+    function deletePatient(DeletePatientRequest $request)
+    {
+        $patient_id = $request->validated()['patient_id'];
+        $patient = Patient::find($patient_id);
+
+        if ($patient) {
+            $patient->delete();
+            return response()->json([
+                'message' => 'Patient deleted successfully'
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Patient not found'
+        ], 400);
+    }
+
+    public function updatePatient(UpdatePatientRequest $request)
+    {
+        $validatedData = $request->validated();
+        $patient_id = $validatedData['patient_id'];
+        $patient = Patient::find($patient_id);
+
+        if ($patient) {
+            $patient->update($validatedData);
+            return response()->json([
+                'message' => 'Patient updated successfully',
+                'data' => $patient
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Patient not found'
+        ], 404);
     }
 }

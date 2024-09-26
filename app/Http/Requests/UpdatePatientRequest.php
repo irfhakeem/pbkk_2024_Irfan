@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddHealthCenterRequest extends FormRequest
+class UpdatePatientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,20 +23,21 @@ class AddHealthCenterRequest extends FormRequest
     {
         return [
             //
-            'nama' => 'required',
-            'alamat' => 'required',
-            'no_telp' => 'required',
-            'email' => 'required',
-            'service_id' => 'required|array',
-            'service_id.*' => 'exists:services,service_id',
+            "patient_id" => ["required", "numeric"],
+            "name" => ["required", "string"],
+            "email" => ["required", "email"],
+            "no_hp" => ["required", "string"],
+            "jenis_kelamin" => ["required", "string"],
+            "Golongan_darah" => ["required", "string"],
+            "tanggal_lahir" => ["required", "date"],
         ];
     }
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new \Illuminate\Http\Exceptions\HttpResponseException(response()->json([
-            'errors' => $validator->errors(),
-            'message' => 'Please Input Correct Data'
+        throw new (response()->json([
+            "error" => $validator->errors(),
+            "messege" => "Please check your input"
         ], 422));
     }
 }

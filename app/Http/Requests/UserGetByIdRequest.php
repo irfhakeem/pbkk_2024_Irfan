@@ -25,7 +25,7 @@ class UserGetByIdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nik' => ['required', 'numeric'],
+            'patient_id' => ['required', 'numeric'],
         ];
     }
 
