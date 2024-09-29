@@ -23,7 +23,7 @@ class MedicalReportController extends Controller
 
         $email =  Auth::user()->email;
         $doctor = Doctor::select('nama', 'doctor_id', 'health_center_id')->where('email', $email)->first();
-        $healthCenter = HealthCenter::select('nama')->where('health_center_id', $doctor->health_center_id)->first();
+        $healthCenter = HealthCenter::select('name')->where('health_center_id', $doctor->health_center_id)->first();
         // dd($doctor, $healthCenter);
 
         $healthCenterServices = HealthCenterService::select('service_id')->where('health_center_id', $doctor->health_center_id)->get();
@@ -74,7 +74,7 @@ class MedicalReportController extends Controller
 
         $email =  Auth::user()->email;
         $doctor = Doctor::select('nama', 'doctor_id', 'health_center_id')->where('email', $email)->first();
-        $healthCenter = HealthCenter::select('nama')->where('health_center_id', $doctor->health_center_id)->first();
+        $healthCenter = HealthCenter::select('name')->where('health_center_id', $doctor->health_center_id)->first();
         // dd($doctor, $healthCenter);
 
         $healthCenterServices = HealthCenterService::select('service_id')->where('health_center_id', $doctor->health_center_id)->get();

@@ -17,7 +17,7 @@ class DrugFactory extends Factory
     public function definition(): array
     {
         return [
-            'nama' => fake()->name(),
+            'nama' => fake()->word(),
             'jenis' => fake()->randomElement(['Tablet', 'Kapsul', 'Cair', 'Salep']),
             'satuan' => fake()->randomElement(['mg', 'ml', 'gram']),
         ];

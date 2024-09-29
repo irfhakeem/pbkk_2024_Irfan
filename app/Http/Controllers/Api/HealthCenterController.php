@@ -34,7 +34,7 @@ class HealthCenterController extends Controller
 
     function addHealthCenter(AddHealthCenterRequest $request)
     {
-        $healthCenter = HealthCenter::create($request->only('nama', 'alamat', 'no_telp', 'email'));
+        $healthCenter = HealthCenter::create($request->only('name', 'address', 'phone', 'province', 'region'));
 
         foreach ($request->service_id as $serviceId) {
             HealthCenterService::create([
@@ -72,7 +72,7 @@ class HealthCenterController extends Controller
         $healthCenter = HealthCenter::where("health_center_id", $id)->first();
 
         if ($healthCenter) {
-            $healthCenter->update($request->only('nama', 'alamat', 'no_telp', 'email'));
+            $healthCenter->update($request->only('name', 'address', 'phone', 'province', 'region'));
 
             $existingServices = HealthCenterService::where('health_center_id', $healthCenter->health_center_id)->pluck('service_id')->toArray();
 

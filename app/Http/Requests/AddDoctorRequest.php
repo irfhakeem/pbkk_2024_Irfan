@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddDoctorRequest extends FormRequest
 {
@@ -36,7 +37,7 @@ class AddDoctorRequest extends FormRequest
 
     protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
-        throw new (response()->json([
+        throw new HttpResponseException(response()->json([
             "error" => $validator->errors(),
             "messege" => "Please check your input"
         ], 422));

@@ -20,8 +20,8 @@ class HealthCenterServiceFactory extends Factory
     {
         return [
             //
-            'health_center_id' => fake()->randomElement(HealthCenter::pluck('health_center_id')->toArray()),
-            'service_id' => fake()->randomElement(Service::pluck('service_id')->toArray()),
+            'health_center_id' => HealthCenter::pluck('health_center_id')->toArray(),
+            'service_id' => Service::pluck('service_id')->toArray(),
         ];
     }
 }

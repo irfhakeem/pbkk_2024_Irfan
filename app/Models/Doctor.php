@@ -15,10 +15,12 @@ class Doctor extends Model
     protected $guard_name = 'web';
     protected $fillable = [
         'sip',
-        'name',
+        'nama',
         'email',
         'no_hp',
         'tanggal_lahir',
         'jenis_kelamin',
+        'spesialis_id',
+        'health_center_id'
     ];
 }

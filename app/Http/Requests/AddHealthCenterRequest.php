@@ -23,10 +23,11 @@ class AddHealthCenterRequest extends FormRequest
     {
         return [
             //
-            'nama' => 'required',
-            'alamat' => 'required',
-            'no_telp' => 'required',
-            'email' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'province' => 'required',
+            'region' => 'required',
             'service_id' => 'required|array',
             'service_id.*' => 'exists:services,service_id',
         ];

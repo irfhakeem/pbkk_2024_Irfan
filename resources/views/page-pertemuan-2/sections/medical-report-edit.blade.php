@@ -55,7 +55,7 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
                     <label for="faskes" class="block mb-2 text-sm text-gray-500">Fasilitas Kesehatan</label>
-                    <input type="text" id="faskes" name="faskes" value="{{ $healthCenter->nama }}" readonly
+                    <input type="text" id="faskes" name="faskes" value="{{ $healthCenter->name }}" readonly
                         class="bg-white text-gray-500 text-sm focus:outline-none focus:ring-0 block w-full">
                 </div>
                 <div class="relative z-0 w-full mb-5 group">

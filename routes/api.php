@@ -17,14 +17,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Patient API
-// Route::middleware(['auth:sanctum', 'can:add patient'])->group(function () {
-//     Route::get('/patient', [PatientController::class, 'get']);
-//     Route::delete('/patient/delete/{id}', [PatientController::class, 'delete']);
-//     Route::post('/patient/add', [PatientController::class, 'add']);
-//     Route::get('/patient/edit/{id}', [PatientController::class, 'edit']);
-//     Route::put('/patient/{id}', [PatientController::class, 'update']);
-// });
-
 Route::get('/patient', [PatientController::class, 'getPatient']);
 Route::get('/patient/{id}', [PatientController::class, 'getPatientById']);
 Route::post('/add-patient', [PatientController::class, 'addPatient']);
@@ -40,7 +32,7 @@ Route::delete('/delete-doctor/{id}', [DoctorController::class, 'delete']);
 
 // Health Center API
 Route::get('/health-center', [HealthCenterController::class, 'getHealthCenter']);
-Route::post('/search-health-center-id', [HealthCenterController::class, 'getHealthCenterById']);
+Route::get('/search-health-center-id/{id}', [HealthCenterController::class, 'getHealthCenterById']);
 Route::post('/add-health-center', [HealthCenterController::class, 'addHealthCenter']);
 Route::put('/update-health-center/{id}', [HealthCenterController::class, 'updateHealthCenter']);
 Route::delete('/delete-health-center/{id}', [HealthCenterController::class, 'deleteHealthCenter']);

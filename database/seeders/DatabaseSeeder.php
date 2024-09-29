@@ -24,10 +24,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        HealthCenter::factory(10)->create();
+        $this->call([
+            HealthCenterSeeder::class,
+        ]);
+        Service::factory(11)->create();
+        $this->call([
+            HealthCenterServiceSeeder::class,
+        ]);
         Specialization::factory(20)->create();
         Drug::factory(15)->create();
-        Service::factory(11)->create();
 
         $admin = Role::create(['name' => 'admin']);
         $patientRole = Role::create(['name' => 'patient']);
@@ -135,5 +140,8 @@ class DatabaseSeeder extends Seeder
         MedicalReport::factory(30)->create();
         Appointment::factory(15)->create();
         Prescription::factory(25)->create();
+        $this->call([
+            PrescriptionDrugSeeder::class,
+        ]);
     }
 }

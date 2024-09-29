@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('health_centers', function (Blueprint $table) {
             $table->id('health_center_id');
-            $table->string('nama');
-            $table->string('alamat');
-            $table->string('no_telp');
-            $table->string('email');
+            $table->string('name');       // Untuk 'name' dari API
+            $table->string('address');    // Untuk 'address' dari API
+            $table->string('region');     // Untuk 'region' dari API
+            $table->string('phone')->nullable();      // Untuk 'phone' dari API
+            $table->string('province');   // Untuk 'province' dari API
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

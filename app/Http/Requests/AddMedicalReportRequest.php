@@ -28,7 +28,7 @@ class AddMedicalReportRequest extends FormRequest
             'judul' => 'required',
             'patient_id' => 'required',
             'dokter' => 'required|exists:doctors,nama',
-            'faskes' => 'required|exists:health_centers,nama',
+            'faskes' => 'required|exists:health_centers,name',
             'service' => 'required|exists:services,nama',
             'diagnosis' => 'required',
             'date' => 'required',

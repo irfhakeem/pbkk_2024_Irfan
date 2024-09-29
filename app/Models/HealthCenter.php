@@ -12,9 +12,10 @@ class HealthCenter extends Model
     protected $table = 'health_centers';
     protected $primaryKey = 'health_center_id';
     protected $fillable = [
-        'nama',
-        'alamat',
-        'no_telp',
-        'email',
+        'name',
+        'address',
+        'region',
+        'phone',
+        'province',
     ];
 }

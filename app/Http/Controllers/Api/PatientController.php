@@ -13,7 +13,7 @@ class PatientController extends Controller
     function getPatient()
     {
         $patients = Patient::all();
-        return response()->json($patients);
+        return response()->json($patients->makeHidden(['created_at', 'updated_at']));
     }
 
     // Get patient by id
@@ -22,7 +22,7 @@ class PatientController extends Controller
         $patient = Patient::where('patient_id', $id)->first()->makeHidden(['created_at', 'updated_at']);
 
         if ($patient) {
-            return response()->json($patient);
+            return response()->json($patient->makeHidden(['created_at', 'updated_at']));
         }
 
         return response()->json([
